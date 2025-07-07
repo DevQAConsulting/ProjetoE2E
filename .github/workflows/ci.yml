@@ -1,0 +1,43 @@
+name: Executar Testes Automatizados E2E
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v3
+
+    - name: Instalar o Google Chrome
+      run: |
+        sudo apt update
+        sudo apt install -y wget unzip xvfb
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo apt install -y ./google-chrome-stable_current_amd64.deb
+
+    - name: Configurar o JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Rodar testes com Maven
+      run: mvn clean test
+
+    - name: Upload dos relatórios (HTML e evidências)
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: relatorios-de-teste
+        path: |
+          target/cucumber-reports.html
+          target/cucumber.json
+          target/extent-report/
