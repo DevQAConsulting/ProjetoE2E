@@ -1,10 +1,7 @@
 package Steps;
 
 import Pages.CheckoutPage;
-import Pages.HomePage;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 public class CheckoutSteps {
@@ -14,9 +11,10 @@ public class CheckoutSteps {
     @And("realizo o processo para finalização de compra")
     public void realizoOProcessoParaFinalizacaoDeCompra() throws InterruptedException {
         checkoutPage.clicarBtnComprar();
-        checkoutPage.clicarBtnSacola();
-        checkoutPage.clicarBtnFinalizarComprar();
+        checkoutPage.clicarBtnFinalizarCompra();
         checkoutPage.clicarBtnContinuar();
         checkoutPage.clicarBtnPix();
+        checkoutPage.clicarBtnFinalizarCompraPix();
+        Assert.assertEquals("Pedido realizado com sucesso!", checkoutPage.msgSucessPix());
     }
 }

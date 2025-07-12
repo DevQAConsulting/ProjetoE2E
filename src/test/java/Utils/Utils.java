@@ -1,6 +1,7 @@
 package Utils;
 
-import Runners.RunCucumberTest;
+
+import Runners.RunnerBase;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,10 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class Utils extends RunCucumberTest {
+public class Utils extends RunnerBase {
 
-    public static void clicar(WebElement elemento) {
-        esperarElementoAparecer(elemento);
+    public static void clicar(WebElement elemento) throws InterruptedException {
+        Thread.sleep(3000);
         elemento.click();
     }
 
@@ -21,7 +22,7 @@ public class Utils extends RunCucumberTest {
         elemento.sendKeys(texto);
     }
 
-    public static String pegarTexto(WebElement elemento) {
+    public static String obterTexto(WebElement elemento) {
         esperarElementoAparecer(elemento);
         return elemento.getText();
     }

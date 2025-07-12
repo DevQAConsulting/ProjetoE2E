@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/features",
-        glue = "Steps",
-        tags = "@sauceDemo",
+        glue = {"Steps", "Utils"},
+        tags = "@LinxLabs",
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports.html",
@@ -20,9 +20,6 @@ public class RunCucumberTest extends RunnerBase {
 
     @AfterClass
     public static void stop() {
-        // Encerra o driver após os testes, se estiver sendo usado diretamente aqui
-        if (driver != null) {
-            driver.quit();
-        }
+        quitDriver();
     }
 }

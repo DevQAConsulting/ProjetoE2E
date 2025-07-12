@@ -1,14 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.example</groupId>
-  <artifactId>univerdadeQAFramework</artifactId>
+  <artifactId>linxEcommerceE2E</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Archetype - univerdadeQAFramework</name>
+  <name>Linx Ecommerce E2E</name>
   <url>http://maven.apache.org</url>
 
   <dependencies>
+    <!-- Selenium WebDriver -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>4.12.1</version>
+    </dependency>
+
     <!-- Cucumber com suporte ao JUnit -->
     <dependency>
       <groupId>io.cucumber</groupId>
@@ -23,30 +31,42 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- JUnit 4 (necessário para executar os testes com o runner Cucumber) -->
+    <!-- JUnit 4 -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
-
-    <!-- Selenium WebDriver -->
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>4.12.1</version>
-    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Plugin para execução dos testes -->
+      <!-- Plugin Maven Surefire com paralelismo ativado -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.1.2</version>
+        <configuration>
+          <parallel>classes</parallel> <!-- Executa testes em paralelo por classe -->
+          <threadCount>2</threadCount> <!-- Ajuste conforme sua máquina -->
+          <useUnlimitedThreads>false</useUnlimitedThreads>
+          <forkCount>2</forkCount> <!-- Garante múltiplos processos isolados -->
+          <reuseForks>true</reuseForks>
+          <includes>
+            <include>**/*Test.java</include>
+            <include>**/*Tests.java</include>
+          </includes>
+        </configuration>
       </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>16</source>
+                <target>16</target>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
 </project>

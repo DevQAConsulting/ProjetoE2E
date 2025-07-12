@@ -1,21 +1,18 @@
 package Pages;
 
 import Runners.RunCucumberTest;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static Utils.Utils.clicar;
-import static Utils.Utils.pegarTexto;
+import static Utils.Utils.*;
 
 public class CheckoutPage extends RunCucumberTest {
 
     public CheckoutPage() {
         PageFactory.initElements(getDriver(), this);
     }
-
-    @FindBy(css = "#header > div.main-bar > div > div > div.icons-resume.col.col-lg-4.col-3.order-lg-12 > div > div.col-lg-4.col.basket > a")
-    private WebElement btnSacola;
 
     @FindBy(css = "#content-wrapper > div.basket-content > div.wd-checkout-basket.wd-widget.wd-widget-js > div.row.grid.no-gutters > div.col.col-12.col-lg-4.summary > div.bottom > div > button.bt-checkout.btn-big.btn-buy")
     private WebElement btnFinalizarComprar;
@@ -29,34 +26,34 @@ public class CheckoutPage extends RunCucumberTest {
     @FindBy(xpath = "//*[@title='Comprar'][@class='btn-buy']")
     private WebElement btnComprar;
 
-    public void clicarBtnSacola() throws InterruptedException {
-        Thread.sleep(5000);
-        getDriver().navigate().refresh();
-        clicar(btnSacola);
+    @FindBy(id = "form-checkout-submit")
+    private WebElement btnFinalizarComprarPix;
+
+    @FindBy(css = "#form-checkout > div > div.checkout-step.confirmation > div.confirmation-wrapper.PIX > div.confirmation-header-color > h2 > span")
+    private WebElement msgSucessPix;
+
+    public void clicarBtnFinalizarCompra() throws InterruptedException {
+        clicar(btnFinalizarComprar);
     }
 
-    public void clicarBtnFinalizarComprar() {
-        clicar(btnFinalizarComprar);
+    public void clicarBtnFinalizarCompraPix() throws InterruptedException {
+        clicar(btnFinalizarComprarPix);
     }
 
     public void clicarBtnContinuar() throws InterruptedException {
         clicar(btnContinuar);
-        Thread.sleep(5000);
-        getDriver().navigate().refresh();
-        Thread.sleep(5000);
-        clicar(btnContinuar);
     }
 
-    public void clicarBtnPix() {
-        getDriver().navigate().refresh();
+    public void clicarBtnPix() throws InterruptedException {
         clicar(btnPix);
-        getDriver().navigate().refresh();
     }
 
     public void clicarBtnComprar() throws InterruptedException {
         clicar(btnComprar);
-        getDriver().navigate().refresh();
-        Thread.sleep(5000);
-        clicar(btnComprar);
+    }
+
+    public String msgSucessPix() throws InterruptedException {
+        Thread.sleep(3000);
+        return msgSucessPix.getText();
     }
 }
