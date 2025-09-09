@@ -1,61 +1,57 @@
 package Pages;
 
-import Runners.RunCucumberTest;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import Elementos.LoginElements;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-
 import static Utils.Utils.*;
 
-public class LoginPage extends RunCucumberTest {
+public class LoginPage {
+
+    private WebDriver driver;
+    private LoginElements el;
 
     public LoginPage() {
-        PageFactory.initElements(getDriver(), this);
+        this.driver = getDriver(); // usando método utilitário para obter o driver
+        el = new LoginElements();
+        PageFactory.initElements(driver, el);
     }
 
-    @FindBy(xpath = "//*[@id='jasoucliente']//input[@id='widget75-email']")
-    private WebElement txtEmail;
-
-    @FindBy(xpath = "//*[@id='jasoucliente']//input[@id='widget75-password']")
-    private WebElement txtSenha;
-
-    @FindBy(xpath = "//*[@id='jasoucliente']//button[@id='widget75-submit']")
-    private WebElement btnLogin;
-
-    @FindBy(id = "agreeUsage")
-    private WebElement agreeUsage;
-
-    @FindBy(css = "#mainModal > div")
-    private WebElement modalLoginIncorreto;
-
-    @FindBy(css = "#mainModal > div > div.input-wrapper > span")
-    private WebElement modal;
-
-    public void digitarEmail() {
-        digitar(txtEmail, "cursouniversidadeqa@gmail.com");
+    public void digitarUsuario(String usuario) {
+        el.txtEmail.sendKeys(usuario);
     }
 
-    public void digitarSenha() {
-        digitar(txtSenha, "Teste123");
+    public void digitarSenha(String senha) {
+        el.txtSenha.sendKeys(senha);
     }
 
-    public void digitarSenhaInvalida() {
-        digitar(txtSenha, "Teste1234");
+    public void clicarBotaoLogin() {
+        el.btnLogin.click();
     }
+
+    public boolean validarLogin() {
+        return el.modalLoginIncorreto.isDisplayed();
+    }
+
+    public void realizarLogin(String usuario, String senha) {
+        digitarUsuario(usuario);
+        digitarSenha(senha);
+        clicarBotaoLogin();
+    }
+
 
     public void clicarAgreeUsage() throws InterruptedException {
-        clicar(agreeUsage);
+        clicar(el.agreeUsage);
     }
 
     public void clicarBtnLogin() throws InterruptedException {
-        clicar(btnLogin);
+        clicar(el.btnLogin);
     }
 
     public void esperarModalLoginCarregar() {
-        esperarElementoAparecer(modalLoginIncorreto);
+        esperarElementoAparecer(el.modalLoginIncorreto);
     }
 
-    public String obterTextoDoModal() throws InterruptedException {
-        return obterTexto(modal);
+    public String obterTextoDoModal() {
+        return obterTexto(el.modal);
     }
 }

@@ -12,9 +12,10 @@ import org.junit.runner.RunWith;
         tags = "@LinxLabs",
         plugin = {
                 "pretty",
-                "html:target/cucumber-reports.html",
-                "json:target/cucumber.json"
-        }
+                "html:target/cucumber-reports/cucumber.html", 
+                "json:target/cucumber-reports/cucumber.json"   
+        },
+        monochrome = true
 )
 public class RunCucumberTest extends RunnerBase {
 
